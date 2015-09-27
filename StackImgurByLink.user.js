@@ -34,16 +34,6 @@ new MutationObserver(function(records)
                         input.style.display = 'block';
                         self.disconnect();
                     }
-                    /*records.forEach(function(r)
-                    {
-                        Array.prototype.forEach.call(r.addedNodes, function(n)
-                        {
-                            console.log(n);
-                            n.querySelector('.modal-options-default.tab-page').style.display = 'none';
-                            n.querySelector('.modal-options-url.tab-page').style.display = 'block';
-                            self.disconnect();
-                        });
-                    });*/
                 }).observe(n, {childList: true});
             }
         });
