@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackImgurByLink
 // @author       Siguza
-// @version      1.0
+// @version      1.0.1
 // @description  Always shows the "Link from the web" box for images
 // @namespace    siguza.stackimglink
 // @homepage     https://github.com/Siguza/StackScripts
@@ -16,26 +16,30 @@
 // @include      /^https?:\/\/stackapps\.com/.*$/
 // ==/UserScript==
 
-new MutationObserver(function(records)
+var header = document.getElementById('header');
+if (header)
 {
-    records.forEach(function(r)
+    new MutationObserver(function(records)
     {
-        Array.prototype.forEach.call(r.addedNodes, function(n)
+        records.forEach(function(r)
         {
-            if(n.classList.contains('image-upload'))
+            Array.prototype.forEach.call(r.addedNodes, function(n)
             {
-                new MutationObserver(function(records, self)
+                if (n.classList.contains('image-upload'))
                 {
-                    var link = n.querySelector('.modal-options-default.tab-page');
-                    var input = n.querySelector('.modal-options-url.tab-page');
-                    if(link && input)
+                    new MutationObserver(function(records, self)
                     {
-                        link.style.display = 'none';
-                        input.style.display = 'block';
-                        self.disconnect();
-                    }
-                }).observe(n, {childList: true});
-            }
+                        var link = n.querySelector('.modal-options-default.tab-page');
+                        var input = n.querySelector('.modal-options-url.tab-page');
+                        if (link && input)
+                        {
+                            link.style.display = 'none';
+                            input.style.display = 'block';
+                            self.disconnect();
+                        }
+                    }).observe(n, {childList: true});
+                }
+            });
         });
-    });
-}).observe(document.getElementById('header'), {childList: true});
+    }).observe(header, {childList: true});
+}
