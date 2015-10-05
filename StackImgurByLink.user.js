@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackImgurByLink
 // @author       Siguza
-// @version      1.0.1
+// @version      1.0.2
 // @description  Always shows the "Link from the web" box for images
 // @namespace    siguza.stackimglink
 // @homepage     https://github.com/Siguza/StackScripts
