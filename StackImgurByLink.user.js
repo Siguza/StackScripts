@@ -29,12 +29,10 @@ if (header)
                 {
                     new MutationObserver(function(records, self)
                     {
-                        var link = n.querySelector('.modal-options-default.tab-page');
-                        var input = n.querySelector('.modal-options-url.tab-page');
-                        if (link && input)
+                        var link = n.querySelector('.modal-options-default.tab-page a');
+                        if(link)
                         {
-                            link.style.display = 'none';
-                            input.style.display = 'block';
+                            link.click();
                             self.disconnect();
                         }
                     }).observe(n, {childList: true});
