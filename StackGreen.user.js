@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         StackGreen
 // @author       Siguza
-// @version      1.0
-// @description  Makes interesting questions green instead of yellow
+// @version      1.0.1
+// @description  Interesting questions are green instead of yellow
 // @namespace    siguza.stackgreen
 // @homepage     https://github.com/Siguza/StackScripts
 // @grant        none
@@ -11,7 +11,7 @@
 // @include      /^https?:\/\/(.*\.)?superuser\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?stackexchange\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?askubuntu\.com/.*$/
-// @include      /^https?:\/\/(.*\.)?mathoverflow\.com/.*$/
+// @include      /^https?:\/\/(.*\.)?mathoverflow\.net/.*$/
 // @include      /^https?:\/\/discuss\.area51\.stackexchange\.com/.*$/
 // @include      /^https?:\/\/stackapps\.com/.*$/
 // ==/UserScript==

@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         StackImgurByLink
 // @author       Siguza
-// @version      1.0.2
-// @description  Always shows the "Link from the web" box for images
+// @version      1.0.3
+// @description  Always show "Link from the web" box for image uploads
 // @namespace    siguza.stackimglink
 // @homepage     https://github.com/Siguza/StackScripts
 // @grant        none
@@ -11,7 +11,7 @@
 // @include      /^https?:\/\/(.*\.)?superuser\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?stackexchange\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?askubuntu\.com/.*$/
-// @include      /^https?:\/\/(.*\.)?mathoverflow\.com/.*$/
+// @include      /^https?:\/\/(.*\.)?mathoverflow\.net/.*$/
 // @include      /^https?:\/\/discuss\.area51\.stackexchange\.com/.*$/
 // @include      /^https?:\/\/stackapps\.com/.*$/
 // ==/UserScript==

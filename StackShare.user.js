@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         StackShare
 // @author       Siguza
-// @version      1.0
-// @description  Makes the share link HTTPS and removes userid
+// @version      1.0.1
+// @description  Make the share link HTTPS and remove userid
 // @namespace    siguza.stackshare
 // @homepage     https://github.com/Siguza/StackScripts
 // @grant        none
@@ -11,7 +11,7 @@
 // @include      /^https?:\/\/(.*\.)?superuser\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?stackexchange\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?askubuntu\.com/.*$/
-// @include      /^https?:\/\/(.*\.)?mathoverflow\.com/.*$/
+// @include      /^https?:\/\/(.*\.)?mathoverflow\.net/.*$/
 // @include      /^https?:\/\/discuss\.area51\.stackexchange\.com/.*$/
 // @include      /^https?:\/\/stackapps\.com/.*$/
 // ==/UserScript==

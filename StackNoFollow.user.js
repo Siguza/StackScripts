@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackNoFollow
 // @author       Siguza
-// @version      1.0
+// @version      1.0.1
 // @description  Makes nofollow links purple
 // @namespace    siguza.stacknofollow
 // @homepage     https://github.com/Siguza/StackScripts
@@ -11,7 +11,7 @@
 // @include      /^https?:\/\/(.*\.)?superuser\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?stackexchange\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?askubuntu\.com/.*$/
-// @include      /^https?:\/\/(.*\.)?mathoverflow\.com/.*$/
+// @include      /^https?:\/\/(.*\.)?mathoverflow\.net/.*$/
 // @include      /^https?:\/\/discuss\.area51\.stackexchange\.com/.*$/
 // @include      /^https?:\/\/stackapps\.com/.*$/
 // ==/UserScript==
