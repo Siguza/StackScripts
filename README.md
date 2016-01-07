@@ -1,2 +1,3 @@
 # StackScripts
-My Tampermonkey scripts I use on StackExchange sites
+Various userscripts I use on StackExchange sites.  
+(Tested only in Chrome with Tampermonkey.)
