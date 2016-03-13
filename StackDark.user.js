@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.0
+// @version      1.1
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -61,7 +61,7 @@ body, .popup, .review-bar-container .review-bar\
 {\
     background: #333 !important;\
 }\
-#chat-body #sound, #chat-body .button, #chat-body .stars:not(.user-star) .img.vote, .bounty-link, .module.community-bulletin .bulletin-title, .module.question-stats, .votes-cast-stats, .user-stats\
+#chat-body #sound, #chat-body .button, #chat-body .stars:not(.user-star) .img.vote, .bounty-link, .module.community-bulletin .bulletin-title, .module.question-stats, .votes-cast-stats, .user-stats, .comment-up-on, .comment-up-off, .comment-flag\
 {\
     -webkit-filter: invert(100%) hue-rotate(180deg) !important;\
     filter: invert(100%) hue-rotate(180deg) !important;\
@@ -111,6 +111,10 @@ body, .popup, .review-bar-container .review-bar\
 #chat .reply-parent, #chat .reply-child\
 {\
     background: rgba(255, 255, 0, 0.2) !important;\
+}\
+.post-text img\
+{\
+    background: #FFF;\
 }\
 .question-summary, .flagged-post, .comment > td\
 {\
@@ -342,6 +346,10 @@ blockquote\
     background-color: #333 !important;\
     box-shadow: none !important;\
 }\
+.answer-hyperlink:visited, .question-hyperlink:visited, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:visited\
+{\
+    color: #777 !important;\
+}\
 ' + f({
 // --------------------
 '^meta\\.': '\
@@ -364,6 +372,14 @@ blockquote\
 {\
     border: solid 1px rgba(0, 100, 255, 0.6) !important;\
 }\
+.answer-hyperlink, .question-hyperlink, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink\
+{\
+    color: #29F !important;\
+}\
+.answer-hyperlink:hover, .question-hyperlink:hover, .answer-hyperlink:active, .question-hyperlink:active, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:hover, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:active\
+{\
+    color: #6BF !important;\
+}\
 ',
 // --------------------
 '^meta.stackoverflow\\.com$': '\
@@ -378,10 +394,6 @@ blockquote\
 .answer-hyperlink, .question-hyperlink, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink\
 {\
     color: #BE1E2D !important;\
-}\
-.answer-hyperlink:visited, .question-hyperlink:visited, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:visited\
-{\
-    color: #777 !important;\
 }\
 .answer-hyperlink:hover, .question-hyperlink:hover, .answer-hyperlink:active, .question-hyperlink:active, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:hover, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:active\
 {\
