@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.1
+// @version      1.2
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -30,10 +30,64 @@ function f(a, l)
     return s;
 }
 
+var l =
+[
+    '#edit-interesting',
+    '#sidebar .community-bulletin .bulletin-item-content a.question-hyperlink',
+    '#sidebar a#addInterestingTag',
+    '#sidebar #chat-feature a',
+    '#sidebar .sidebar-linked .spacer.more a',
+    '#newsletter-preview-container a',
+    '#hot-network-questions a',
+    '#permalink a',
+    '#feed-link a',
+    '.container #system-message a',
+    '.answer-hyperlink',
+    '.question-hyperlink',
+    '.comments-link',
+    '.comment-user',
+    '.help-tab',
+    '.show-more',
+    '.discard-question',
+    '.discard-answer',
+    '.revision .user-details a',
+    '.owner-revision .user-details a',
+    '.vote-revision .revcell3 > a',
+    '.page-description form a',
+    '.post-text a:not(.post-tag)',
+    '.question-status a:not(.badge-tag)',
+    '.wmd-preview a',
+    '.comment-copy a',
+    '.user-action-time a',
+    '.excerpt a',
+    '.started a:not(.started-link)',
+    '.started .mod-flair',
+    '.user-details a',
+    '.bottom-share-links a',
+    '.bottom-notice a:not(.post-tag)',
+    '.section-content a',
+    '.cv-list a',
+    'article.post.full-post .entry a',
+    'div.clc-jobs-multi>.middle>ul>li .title',
+    'div.clc-jobs-multi>.bottom a',
+];
+var links = l.join(',');
+var hover = l.reduce(function(p, c)
+{
+    p.push(c + ':hover');
+    p.push(c + ':active');
+    return p;
+}, ['.started a:hover', '.started a:active']).join(',');
+
+
 document.head.appendChild(document.createElement('style')).innerHTML = '\
-body, .popup, .review-bar-container .review-bar\
+body, .popup, .review-bar-container .review-bar, .cv-list\
 {\
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAgMAAAANjH3HAAAACVBMVEUaGhohISElJSUh9lebAAAB20lEQVRIx4XWuZXDMAwE0C0SAQtggIIYoAAEU+aKOHhYojTrYP2+QfOW/5QIJOih/q8HwF/pb3EX+UPIveYcQGgEHiu9hI+ihEc5Jz5KBIlRRRaJ1JtoSAl5Hw96hLB1/up1tnIXOck5jZQy+3iU2hAOKSH1JvwxHsp+5TLF5MOl1/MQXsVs1miXc+KDbYydyMeUgpPQreZ7fWidbNhkXNJSeAhc6qHmHD8AYovunYyEACWEbyIhNeB9fRrH3hFi0bGPLuEW7xCNaohw1vAlS805nfsrTspclB/hVdoqusg53eH7FWot+wjYpOViX8KbFFKTwlnzvj65P9H/vD0/hibYBGhPwlPO8TmxRsaxsNnrUmUXpNhirlJMPr6Hqq9k5Xn/8iYQHYIuQsWFC6Z87IOxLxHphSY4SpuiU87xJnJr5axfeRd+lnMExXpEWPpuZ1v7qZdNBOjiHzDREHX5fs5Zz9p6X0vVKbKKchlSl5rv+3p//FJ/PYvoKryI8vs+2G9lzRmnEKkh+BU8yDk515jDj/HAswu7CCz6U/Mxb/PnC9N41ndpU4hUU7JGk/C9PmP/M2xZYdvBW2PObyf1IUiIzoHmHW9yTncliYs9A9tVNppdShfgQaTLMf+j3X723tLeHgAAAABJRU5ErkJggg==) !important;\
+}\
+.cv-list, .cv-list hr\
+{\
+    border-color: #AAA !important;\
 }\
 .popup-close a\
 {\
@@ -48,6 +102,14 @@ body, .popup, .review-bar-container .review-bar\
 {\
     background: none !important;\
 }\
+#main-content\
+{\
+    color: #CCC !important;\
+}\
+._background-light\
+{\
+    background: rgba(255, 255, 255, .05) !important;\
+}\
 #content, #chat .messages, #chat-body #sidebar, #chat-body a.signature .flair, #sidebar h4, .popup\
 {\
     color: #CCC !important;\
@@ -61,7 +123,7 @@ body, .popup, .review-bar-container .review-bar\
 {\
     background: #333 !important;\
 }\
-#chat-body #sound, #chat-body .button, #chat-body .stars:not(.user-star) .img.vote, .bounty-link, .module.community-bulletin .bulletin-title, .module.question-stats, .votes-cast-stats, .user-stats, .comment-up-on, .comment-up-off, .comment-flag\
+#chat-body #sound, #chat-body .button, #chat-body .stars:not(.user-star) .img.vote, .bounty-link, .module.community-bulletin .bulletin-title, .module.question-stats, .votes-cast-stats, .user-stats, .comment-up-on, .comment-up-off, .comment-flag, .openid-icon\
 {\
     -webkit-filter: invert(100%) hue-rotate(180deg) !important;\
     filter: invert(100%) hue-rotate(180deg) !important;\
@@ -75,6 +137,22 @@ body, .popup, .review-bar-container .review-bar\
 {\
     text-shadow: none !important;\
 }\
+#chat-body a .username.owner\
+{\
+    color: #BB0 !important;\
+}\
+#chat-body a:hover .username.owner\
+{\
+    color: #FF0 !important;\
+}\
+#chat-body a .username.moderator\
+{\
+    color: #900 !important;\
+}\
+#chat-body a:hover .username.moderator\
+{\
+    color: #C00 !important;\
+}\
 #chat-body .catchup-marker\
 {\
     border-top: none !important;\
@@ -82,7 +160,11 @@ body, .popup, .review-bar-container .review-bar\
 #chat div.message:hover, #chat .timestamp:hover + div.message\
 {\
     border: solid 1px rgba(0, 0, 0, 0) !important;\
-    background: rgba(255, 255, 255, 0.05) !important;\
+    background: rgba(255, 255, 255, 0.1) !important;\
+}\
+#chat div.message .meta\
+{\
+    background: #333 !important;\
 }\
 #chat-body a.signature\
 {\
@@ -111,6 +193,94 @@ body, .popup, .review-bar-container .review-bar\
 #chat .reply-parent, #chat .reply-child\
 {\
     background: rgba(255, 255, 0, 0.2) !important;\
+}\
+#chat-feature\
+{\
+    border: solid 1px rgba(255, 255, 255, .15) !important;\
+    border-radius: 5px !important;\
+    background: rgba(255, 255, 255, .05) !important;\
+}\
+#chat-feature h4\
+{\
+    margin: 0 !important;\
+    padding: 12px 10px 4px 10px !important;\
+}\
+#chat-feature .ad502-room\
+{\
+    background: none !important;\
+    border: none !important;\
+    border-radius: 0 !important;\
+    padding-left: 10px !important;\
+    padding-right: 10px !important;\
+    -webkit-box-shadow: none !important;\
+    box-shadow: none !important;\
+    padding-top: 2px !important;\
+    padding-bottom: 0 !important;\
+}\
+#chat-feature .ad502-room:last-child\
+{\
+    padding-bottom: 5px !important;\
+}\
+#chat-feature .ad502-room::before\
+{\
+    content: " " !important;\
+    display: block !important;\
+    height: 1px !important;\
+    background: rgba(255, 255, 255, .15) !important;\
+    margin-bottom: 5px !important;\
+}\
+#newsletter-ad\
+{\
+    background: rgba(0,255,255,.08) !important;\
+    border: solid 1px rgba(255,255,255,.25) !important;\
+    padding: 0 14px 0 14px !important;\
+}\
+#newsletter-ad::before\
+{\
+    content: "Love this site?" !important;\
+    font-weight: bold !important;\
+    font-size: 30px !important;\
+    display: block !important;\
+    margin-top: 23px !important;\
+    color: #FFF !important;\
+}\
+#newsletter-ad-header\
+{\
+    margin-top: 20px !important;\
+}\
+.suggested-edit .body-diffs .full-diff .skip\
+{\
+    background: rgba(255, 255, 255, .2) !important;\
+}\
+.suggested-edit .body-diffs .full-diff td\
+{\
+    border-color: rgba(0, 0, 0, 0) !important;\
+}\
+.suggested-edit .body-diffs .full-diff td.content\
+{\
+    color: #666 !important;\
+}\
+.suggested-edit .body-diffs .full-diff td.content.deleted, .suggested-edit .body-diffs .full-diff td.content.inserted\
+{\
+    color: inherit !important;\
+}\
+.suggested-edit .body-diffs .full-diff .deleted > div\
+{\
+    background: rgba(255, 0, 0, .1) !important;\
+}\
+.suggested-edit .body-diffs .full-diff .inserted > div\
+{\
+    background: rgba(0, 255, 0, .05) !important;\
+}\
+span.diff-delete\
+{\
+    background: rgba(255, 0, 0, .4) !important;\
+    color: #FAA !important;\
+}\
+span.diff-add\
+{\
+    background: rgba(0, 255, 0, .2) !important;\
+    color: #AFA !important;\
 }\
 .post-text img\
 {\
@@ -174,13 +344,41 @@ body, .popup, .review-bar-container .review-bar\
 {\
     border: none !important;\
 }\
-.question-status, .module.community-bulletin, .module.newuser\
+.question-status, .module.community-bulletin, .module.newuser, div.clc-jobs-multi\
 {\
-    border: solid 1px rgba(255, 255, 255, 0.1) !important;\
+    border: solid 1px rgba(255, 255, 255, 0.15) !important;\
+}\
+div.clc-jobs-multi.orange\
+{\
+    background: rgba(283, 96, 20, .125) !important;\
+}\
+div.clc-jobs-multi.blue\
+{\
+    background: rgba(0, 119, 204, .15) !important;\
+}\
+div.clc-jobs-multi>.middle>ul>li\
+{\
+    border-top: none !important;\
+}\
+div.clc-jobs-multi>.middle>ul>li:first-child\
+{\
+    padding-top: 0 !important;\
+}\
+div.clc-jobs-multi>.middle>ul>li::before, div.clc-jobs-multi>.bottom::before\
+{\
+    content: " " !important;\
+    display: block !important;\
+    height: 1px !important;\
+    background: rgba(255, 255, 255, 0.2) !important;\
+    margin-bottom: 10px !important;\
 }\
 .module.community-bulletin, .module.newuser\
 {\
-    background: rgba(255, 0, 0, 0.05) !important;\
+    background: rgba(255, 0, 0, .075) !important;\
+}\
+div.clc-jobs-multi>.middle, div.clc-jobs-multi>.bottom\
+{\
+    background: none !important;\
 }\
 .module.community-bulletin\
 {\
@@ -188,18 +386,18 @@ body, .popup, .review-bar-container .review-bar\
 }\
 .question-status\
 {\
-    background: rgba(0, 100, 255, 0.15) !important;\
+    background: rgba(0, 100, 255, 0.2) !important;\
 }\
-.post-tag, .ob-post-tag, #room-tags .tag, .postTag\
+.post-tag, .ob-post-tag, #room-tags .tag, .postTag, ._tag\
 {\
     background: rgba(255, 255, 255, 0.1) !important;\
     color: #999 !important;\
 }\
-.post-tag:hover, .ob-post-tag:hover, #room-tags .tag:hover, .postTag:hover\
+.post-tag:hover, .ob-post-tag:hover, #room-tags .tag:hover, .postTag:hover, ._tag:hover\
 {\
     background: rgba(255, 255, 255, 0.2) !important;\
 }\
-.post-tag, .ob-post-tag, #room-tags .tag, .find-newest, .add-tab, .page-numbers:not(.desc):not(.dots), .postTag\
+.post-tag, .ob-post-tag, #room-tags .tag, .find-newest, .add-tab, .page-numbers:not(.desc):not(.dots), .postTag, ._tag\
 {\
     border: solid 1px rgba(255, 255, 255, 0.2) !important;\
     -webkit-transition: color 0.15s ease, background 0.15s ease, border 0.15s ease;\
@@ -263,6 +461,14 @@ hr\
 {\
     color: #FFF !important;\
 }\
+.container #system-message\
+{\
+    color: #FFF !important;\
+    background: rgba(255, 255, 255, .1) !important;\
+    border: none !important;\
+    width: 1095px !important;\
+    border-radius: 0 !important;\
+}\
 .flagged-post .deleted-answer\
 {\
     background: rgba(255, 0, 0, 0.15) !important;\
@@ -270,6 +476,18 @@ hr\
 .revision-comment\
 {\
     color: inherit !important;\
+}\
+.revision td, .owner-revision td, .vote-revision td\
+{\
+    background: rgba(255, 255, 255, .1) !important;\
+}\
+.user-info .user-action-time, .reputation-score, .excerpt, .post-menu > a, .post-menu > span > a\
+{\
+    color: #999 !important;\
+}\
+.post-menu > a:hover, .post-menu > a:active, .post-menu > span > a:hover\
+{\
+    color: #CCC !important;\
 }\
 code\
 {\
@@ -346,12 +564,42 @@ blockquote\
     background-color: #333 !important;\
     box-shadow: none !important;\
 }\
-.answer-hyperlink:visited, .question-hyperlink:visited, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:visited\
+.result-highlight\
+{\
+    color: #FFF !important;\
+}\
+.newnav div.welovestackoverflow\
+{\
+    margin-top: 10px !important;\
+    background-color: rgba(255,255,255,0.05) !important;\
+    color: #CCC !important;\
+}\
+/*.new_comment\
+{\
+    background: none !important;\
+    -webkit-animation: commentFadeIn 1.5s ease-in 1;\
+    -moz-animation: commentFadeIn 1.5s ease-in 1;\
+    animation: commentFadeIn 1.5s ease-in 1;\
+}\
+@-webkit-keyframes commentFadeIn\
+{\
+    0% { background: rgba(0, 255, 0, .1); }\
+    100% { background: rgba(0, 255, 0, 0); }\
+}*/\
+.answer-hyperlink:visited, .question-hyperlink:visited, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:visited, #hot-network-questions ul a:visited, .post-text a:visited, .wmd-preview a:visited, .section-content a:visited, article.post.full-post .entry a:visited\
 {\
     color: #777 !important;\
 }\
 ' + f({
-// --------------------
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
+'^(.*\\.)?((stackoverflow|superuser|(apple|docs-beta)\\.stackexchange)\\.com|mathoverflow\\.net)$': '\
+#hlogo, #footer-logo, .header-logo\
+{\
+    -webkit-filter: invert(100%) hue-rotate(180deg) !important;\
+    filter: invert(100%) hue-rotate(180deg) !important;\
+}\
+',
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 '^meta\\.': '\
 .comment-user.owner\
 {\
@@ -362,7 +610,7 @@ blockquote\
     border: solid 1px rgba(0, 100, 255, 0.6) !important;\
 }\
 ',
-// --------------------
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 '^stackoverflow\\.com$': '\
 .comment-user.owner\
 {\
@@ -372,16 +620,21 @@ blockquote\
 {\
     border: solid 1px rgba(0, 100, 255, 0.6) !important;\
 }\
-.answer-hyperlink, .question-hyperlink, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink\
+',
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
+'^(((blog|chat)\\.)?stackoverflow|docs-beta\\.stackexchange)\\.com$': '\
+'+links+'\
 {\
     color: #29F !important;\
+    text-decoration: none important;\
 }\
-.answer-hyperlink:hover, .question-hyperlink:hover, .answer-hyperlink:active, .question-hyperlink:active, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:hover, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:active\
+'+hover+'\
 {\
     color: #6BF !important;\
+    text-decoration: none important;\
 }\
 ',
-// --------------------
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 '^meta.stackoverflow\\.com$': '\
 .comment-user.owner\
 {\
@@ -391,16 +644,16 @@ blockquote\
 {\
     border: solid 1px rgba(255, 0, 0, 0.6) !important;\
 }\
-.answer-hyperlink, .question-hyperlink, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink\
+'+links+'\
 {\
     color: #BE1E2D !important;\
 }\
-.answer-hyperlink:hover, .question-hyperlink:hover, .answer-hyperlink:active, .question-hyperlink:active, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:hover, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:active\
+'+hover+'\
 {\
     color: #E64958 !important;\
 }\
 ',
-// --------------------
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 '^chat.stackoverflow\\.com$': '\
 #chat a:not(.tag):not(.button), #sidebar a:not(.tag):not(.button)\
 {\
@@ -412,7 +665,7 @@ blockquote\
     text-decoration: none !important;\
 }\
 ',
-// --------------------
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 '^blog.stackoverflow\\.com$': '\
 article.post.full-post .entry\
 {\
@@ -428,22 +681,14 @@ article.post.full-post .entry .metadata\
     filter: invert(100%) hue-rotate(180deg) !important;\
 }\
 ',
-// --------------------
-'^(.*\\.)?((stackoverflow|superuser|apple\\.stackexchange)\\.com|mathoverflow\\.net)$': '\
-#hlogo, #footer-logo\
-{\
-    -webkit-filter: invert(100%) hue-rotate(180deg) !important;\
-    filter: invert(100%) hue-rotate(180deg) !important;\
-}\
-',
-// --------------------
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 '^(.*\\.)?apple\\.stackexchange\\.com$': '\
 .question-summary .status\
 {\
     border-radius: 4px !important;\
 }\
 ',
-// --------------------
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 '^(.*\\.)?askubuntu\\.com$': '\
 #custom-header, .footerwrap\
 {\
@@ -455,5 +700,5 @@ article.post.full-post .entry .metadata\
     box-shadow: none !important;\
 }\
 ',
-// --------------------
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 }, location.hostname);
