@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.2
+// @version      1.3.0
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -16,6 +16,7 @@
 // @include      /^https?:\/\/discuss\.area51\.stackexchange\.com/.*$/
 // @include      /^https?:\/\/stackapps\.com/.*$/
 // ==/UserScript==
+/*jshint multistr: true */
 
 function f(a, l)
 {
@@ -41,11 +42,14 @@ var l =
     '#hot-network-questions a',
     '#permalink a',
     '#feed-link a',
+    '#leagueRank a',
+    '#users-legend a',
     '.container #system-message a',
     '.answer-hyperlink',
     '.question-hyperlink',
     '.comments-link',
     '.comment-user',
+    '.additional-links a',
     '.help-tab',
     '.show-more',
     '.discard-question',
@@ -56,20 +60,25 @@ var l =
     '.page-description form a',
     '.post-text a:not(.post-tag)',
     '.question-status a:not(.badge-tag)',
-    '.wmd-preview a',
+    '.wmd-preview a:not(.post-tag)',
     '.comment-copy a',
     '.user-action-time a',
+    '.top a',
     '.excerpt a',
     '.started a:not(.started-link)',
     '.started .mod-flair',
     '.user-details a',
+    '.user-panel-footer a',
+    '.recently-deleted a',
     '.bottom-share-links a',
     '.bottom-notice a:not(.post-tag)',
     '.section-content a',
     '.cv-list a',
+    'h3.title-section a',
     'article.post.full-post .entry a',
     'div.clc-jobs-multi>.middle>ul>li .title',
     'div.clc-jobs-multi>.bottom a',
+    'a.site-hyperlink',
 ];
 var links = l.join(',');
 var hover = l.reduce(function(p, c)
@@ -79,9 +88,8 @@ var hover = l.reduce(function(p, c)
     return p;
 }, ['.started a:hover', '.started a:active']).join(',');
 
-
 document.head.appendChild(document.createElement('style')).innerHTML = '\
-body, .popup, .review-bar-container .review-bar, .cv-list\
+body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-config\
 {\
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAgMAAAANjH3HAAAACVBMVEUaGhohISElJSUh9lebAAAB20lEQVRIx4XWuZXDMAwE0C0SAQtggIIYoAAEU+aKOHhYojTrYP2+QfOW/5QIJOih/q8HwF/pb3EX+UPIveYcQGgEHiu9hI+ihEc5Jz5KBIlRRRaJ1JtoSAl5Hw96hLB1/up1tnIXOck5jZQy+3iU2hAOKSH1JvwxHsp+5TLF5MOl1/MQXsVs1miXc+KDbYydyMeUgpPQreZ7fWidbNhkXNJSeAhc6qHmHD8AYovunYyEACWEbyIhNeB9fRrH3hFi0bGPLuEW7xCNaohw1vAlS805nfsrTspclB/hVdoqusg53eH7FWot+wjYpOViX8KbFFKTwlnzvj65P9H/vD0/hibYBGhPwlPO8TmxRsaxsNnrUmUXpNhirlJMPr6Hqq9k5Xn/8iYQHYIuQsWFC6Z87IOxLxHphSY4SpuiU87xJnJr5axfeRd+lnMExXpEWPpuZ1v7qZdNBOjiHzDREHX5fs5Zz9p6X0vVKbKKchlSl5rv+3p//FJ/PYvoKryI8vs+2G9lzRmnEKkh+BU8yDk515jDj/HAswu7CCz6U/Mxb/PnC9N41ndpU4hUU7JGk/C9PmP/M2xZYdvBW2PObyf1IUiIzoHmHW9yTncliYs9A9tVNppdShfgQaTLMf+j3X723tLeHgAAAABJRU5ErkJggg==) !important;\
 }\
@@ -98,6 +106,15 @@ body, .popup, .review-bar-container .review-bar, .cv-list\
 {\
     color: #777 !important;\
 }\
+.message.message-config\
+{\
+    border: solid 1px #CCC !important;\
+    color: #999 !important;\
+}\
+.message.message-config h1, .message.message-config h2, .message.message-config h3, .message.message-config h4\
+{\
+    color: #CCC !important;\
+}\
 .container, #content, .tag-container\
 {\
     background: none !important;\
@@ -109,6 +126,10 @@ body, .popup, .review-bar-container .review-bar, .cv-list\
 ._background-light\
 {\
     background: rgba(255, 255, 255, .05) !important;\
+}\
+#sideBar > *\
+{\
+    color: #CCC !important;\
 }\
 #content, #chat .messages, #chat-body #sidebar, #chat-body a.signature .flair, #sidebar h4, .popup\
 {\
@@ -127,6 +148,10 @@ body, .popup, .review-bar-container .review-bar, .cv-list\
 {\
     -webkit-filter: invert(100%) hue-rotate(180deg) !important;\
     filter: invert(100%) hue-rotate(180deg) !important;\
+}\
+.vote div[style="color:maroon"]\
+{\
+    color: #F66 !important;\
 }\
 #chat .messages\
 {\
@@ -294,6 +319,10 @@ span.diff-add\
 {\
     border-top: solid 1px rgba(255, 255, 255, 0.2) !important;\
 }\
+.history-table .comments\
+{\
+    border-top: none !important;\
+}\
 .question-summary .status.unanswered, .question-summary .status.unanswered *\
 {\
     color: #777 !important;\
@@ -306,7 +335,7 @@ span.diff-add\
 {\
     font-weight: bold !important;\
 }\
-.question-summary .status.answered, .question-summary .status.answered .mini-counts\
+.question-summary .status.answered, .question-summary .status.answered .mini-counts, .post-timeline-v2 .filters .event-count\
 {\
     color: #FFF !important;\
 }\
@@ -314,11 +343,51 @@ span.diff-add\
 {\
     color: #FF0 !important;\
 }\
-.mini-counts.answered-accepted, .rep-up.special-rep\
+.votes-cast-stats td\
 {\
-    background: rgba(0, 255, 0, 0.1) !important;\
+    color: #333 !important;\
+}\
+.user-page .mini-counts, .item-multiplier-count, .badgecount, .show-votes .sidebar-linked .spacer>a:first-child .answer-votes, .show-votes .sidebar-related .spacer>a:first-child .answer-votes\
+{\
+    color: #AAA !important;\
+    background: none !important;\
+}\
+.question-summary .status\
+{\
+    border: none !important;\
+}\
+.answer-votes\
+{\
+    color: #BBB !important;\
+}\
+.user-page .mini-counts.answered-accepted, .rep-up.special-rep, .show-votes .sidebar-linked .spacer>a:first-child .answer-votes.answered-accepted, .show-votes .sidebar-related .spacer>a:first-child .answer-votes.answered-accepted\
+{\
     color: #CCC !important;\
-    border-color: #AAA !important;\
+    background: rgba(0, 255, 0, 0.15) !important;\
+}\
+.user-show-new .user-rep-full .rep-table-row>td\
+{\
+    border-bottom: dotted 1px rgba(255, 255, 255, 0.2) !important;\
+}\
+.user-show-new .answer-summary\
+{\
+    border-bottom: solid 1px rgba(255, 255, 255, 0.2) !important;\
+}\
+.user-show-new .history-table>tbody>tr:not(:first-child):not(.loaded-body)\
+{\
+    border-top: solid 1px rgba(255, 255, 255, 0.1) !important;\
+}\
+.user-page .count-cell > .mini-counts, .user-rep .rep-up, .show-votes .sidebar-linked .spacer>a:first-child .answer-votes, .show-votes .sidebar-related .spacer>a:first-child .answer-votes\
+{\
+    border: solid 1px rgba(255, 255, 255, .5) !important;\
+}\
+.badge\
+{\
+    background: #404040 !important;\
+}\
+.badge:hover\
+{\
+    background: #555 !important;\
 }\
 #top-cards .card, .tag-container .col, .post-signature:last-child, #herobox, .review-stats-current-user, .review-stats-count-current-user\
 {\
@@ -406,6 +475,11 @@ div.clc-jobs-multi>.middle, div.clc-jobs-multi>.bottom\
     -o-transition: color 0.15s ease, background 0.15s ease, border 0.15s ease;\
     transition: color 0.15s ease, background 0.15s ease, border 0.15s ease;\
 }\
+.add-tab\
+{\
+    color: #888 !important;\
+    border: solid 1px rgba(255, 255, 255, 0.4) !important;\
+}\
 .required-tag\
 {\
     border-color: rgba(255, 255, 255, 0.5) !important;\
@@ -471,7 +545,7 @@ hr\
 }\
 .flagged-post .deleted-answer\
 {\
-    background: rgba(255, 0, 0, 0.15) !important;\
+    background: rgba(255, 0, 0, 0.1) !important;\
 }\
 .revision-comment\
 {\
@@ -525,6 +599,73 @@ code .com\
 {\
     color: #080 !important;\
 }\
+.user-page .card.impact-card .number a, .user-show-new .card.impact-card .number a\
+{\
+    color: #777 !important;\
+    text-decoration: none !important;\
+    transition: color .15s ease-in-out;\
+}\
+.user-page .card.impact-card .number a:hover, .user-show-new .card.impact-card .number a:hover\
+{\
+    color: #AAA !important;\
+}\
+.user-page .card.rep-card .rep, .user-show-new .card.rep-card .rep, .user-page .subheader.reloaded .mini-avatar .name, .avatar-card .reputation\
+{\
+    color: #DDD !important;\
+}\
+.avatar-card\
+{\
+    box-shadow: none !important;\
+    background: rgba(255,255,255,.05) !important;\
+}\
+.rep-increase\
+{\
+    background: green !important;\
+}\
+.progress-bar .label, .progress-bar-large .label\
+{\
+    color: #CCC !important;\
+}\
+.rep-card .progress-bar .percent, .progress-bar.green .percent, .rep-card .progress-bar-large .percent, .progress-bar-large.green .percent\
+{\
+    background: rgba(0,255,0,.15) !important;\
+}\
+.rep-card .progress-bar .bar:hover .percent, .progress-bar.green .bar:hover .percent, .rep-card .progress-bar-large .bar:hover .percent, .progress-bar-large.green .bar:hover .percent\
+{\
+    background: rgba(0,255,0,.25) !important;\
+}\
+.badges-card .progress-bar.badge-1 .bar .percent, .all-badge-progress .progress-bar.badge-1 .bar .percent, .badges-card .progress-bar-large.badge-1 .bar .percent, .all-badge-progress .progress-bar-large.badge-1 .bar .percent\
+{\
+    background: rgba(255, 204, 0, 0.25) !important;\
+}\
+.badges-card .progress-bar.badge-1 .bar:hover .percent, .all-badge-progress .progress-bar.badge-1 .bar:hover .percent, .badges-card .progress-bar-large.badge-1 .bar:hover .percent, .all-badge-progress .progress-bar-large.badge-1 .bar:hover .percent\
+{\
+    background: rgba(255, 204, 0, 0.35) !important;\
+}\
+.badges-card .progress-bar.badge-2 .bar .percent, .all-badge-progress .progress-bar.badge-2 .bar .percent, .badges-card .progress-bar-large.badge-2 .bar .percent, .all-badge-progress .progress-bar-large.badge-2 .bar .percent\
+{\
+    background: rgba(197,197,197,0.25) !important;\
+}\
+.badges-card .progress-bar.badge-2 .bar:hover .percent, .all-badge-progress .progress-bar.badge-2 .bar:hover .percent, .badges-card .progress-bar-large.badge-2 .bar:hover .percent, .all-badge-progress .progress-bar-large.badge-2 .bar:hover .percent\
+{\
+    background: rgba(197,197,197,0.35) !important;\
+}\
+.badges-card .progress-bar.badge-3 .bar .percent, .all-badge-progress .progress-bar.badge-3 .bar .percent, .badges-card .progress-bar-large.badge-3 .bar .percent, .all-badge-progress .progress-bar-large.badge-3 .bar .percent\
+{\
+    background: rgba(204,153,102,0.25) !important;\
+}\
+.badges-card .progress-bar.badge-3 .bar:hover .percent, .all-badge-progress .progress-bar.badge-3 .bar:hover .percent, .badges-card .progress-bar-large.badge-3 .bar:hover .percent, .all-badge-progress .progress-bar-large.badge-3 .bar:hover .percent\
+{\
+    background: rgba(204,153,102,0.35) !important;\
+}\
+.popup-badges .all-badge-progress .badge-progress .badge-description\
+{\
+    color: #CCC !important;\
+}\
+.popup-badges .all-badge-progress .badge-progress:hover\
+{\
+    background: rgba(255,255,255,.1) !important;\
+}\
 .new-post-activity, #new-answer-activity\
 {\
     background: none !important;\
@@ -554,6 +695,10 @@ blockquote\
 {\
     color: #FFF !important;\
     border-bottom-color: #FFF !important;\
+}\
+#tabs a.youarehere:before, .tabs a.youarehere:before, .newnav .tabs-list-container .tabs-list .intellitab a.youarehere:before\
+{\
+    background: none !important;\
 }\
 .newnav .tabs-list-container .tabs-list .intellitab:after\
 {\
@@ -586,7 +731,7 @@ blockquote\
     0% { background: rgba(0, 255, 0, .1); }\
     100% { background: rgba(0, 255, 0, 0); }\
 }*/\
-.answer-hyperlink:visited, .question-hyperlink:visited, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:visited, #hot-network-questions ul a:visited, .post-text a:visited, .wmd-preview a:visited, .section-content a:visited, article.post.full-post .entry a:visited\
+.answer-hyperlink:visited, .question-hyperlink:visited, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:visited, #hot-network-questions ul a:visited, .post-text a:not(.post-tag):visited, .wmd-preview a:not(.post-tag):visited, .section-content a:not(.post-tag):visited, article.post.full-post .entry a:not(.post-tag):visited\
 {\
     color: #777 !important;\
 }\
@@ -609,6 +754,10 @@ blockquote\
 {\
     border: solid 1px rgba(0, 100, 255, 0.6) !important;\
 }\
+.user-page .mini-counts.answered-accepted, .rep-up.special-rep, .show-votes .sidebar-linked .spacer>a:first-child .answer-votes.answered-accepted, .show-votes .sidebar-related .spacer>a:first-child .answer-votes.answered-accepted\
+{\
+    background: rgba(255, 255, 0, 0.2) !important;\
+}\
 ',
 // -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
 '^stackoverflow\\.com$': '\
@@ -619,6 +768,22 @@ blockquote\
 .comment-user.owner\
 {\
     border: solid 1px rgba(0, 100, 255, 0.6) !important;\
+}\
+#footer .footerwrap #copyright, #footer .footerwrap #additional-notices, #footer .footerwrap #svnrev\
+{\
+    color: #888 !important;\
+}\
+#footer .footerwrap #copyright a, #footer .footerwrap #additional-notices a, #footer .footerwrap #svnrev a\
+{\
+    color: #aaa !important;\
+}\
+',
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
+'^(meta\\.)?stackoverflow\\.com$': '\
+.vote\
+{\
+    -webkit-filter: invert(100%) hue-rotate(180deg) !important;\
+    filter: invert(100%) hue-rotate(180deg) !important;\
 }\
 ',
 // -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
@@ -635,7 +800,7 @@ blockquote\
 }\
 ',
 // -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
-'^meta.stackoverflow\\.com$': '\
+'^meta\\.(stackoverflow|superuser)\\.com': '\
 .comment-user.owner\
 {\
     background: rgba(255, 0, 0, 0.15) !important;\
@@ -644,6 +809,9 @@ blockquote\
 {\
     border: solid 1px rgba(255, 0, 0, 0.6) !important;\
 }\
+',
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
+'^meta\\.stackoverflow\\.com$': '\
 '+links+'\
 {\
     color: #BE1E2D !important;\
