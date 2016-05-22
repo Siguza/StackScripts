@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackNoFollow
 // @author       Siguza
-// @version      1.0.1
+// @version      1.0.3
 // @description  Makes nofollow links purple
 // @namespace    siguza.stacknofollow
 // @homepage     https://github.com/Siguza/StackScripts
@@ -17,5 +17,5 @@
 // ==/UserScript==
 
 var s = document.createElement('style');
-s.innerHTML = 'a[rel="nofollow"]{color:#C0C !important}a[rel="nofollow"]:visited{color:#909 !important}a[rel="nofollow"]:hover{color:#F0F !important}';
+s.innerHTML = 'a[rel="nofollow"],.post-text a[rel="nofollow"]{color:#C0C !important}a[rel="nofollow"]:hover,.post-text a[rel="nofollow"]:hover,a[rel="nofollow"]:visited:hover,.post-text a[rel="nofollow"]:visited:hover{color:#F0F !important}a[rel="nofollow"]:visited,.post-text a[rel="nofollow"]:visited{color:#909 !important}';
 document.head.appendChild(s);
