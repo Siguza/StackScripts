@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.4.0
+// @version      1.5.0
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -86,22 +86,43 @@ var l =
     'a.doc-topic-link',
     'a.doc-example-link',
 ];
-var links = l.join(',');
+var links = l.reduce(function(p, c)
+{
+    p.push(c + ':not(:visited):not(:hover):not(:active)');
+    return p;
+}, []).join(',');
 var hover = l.reduce(function(p, c)
 {
     p.push(c + ':hover');
     p.push(c + ':active');
     return p;
 }, ['.started a:hover', '.started a:active']).join(',');
+var visited = l.filter(function(e)
+{
+    return ['.comment-user', '.user-details a'].indexOf(e) == -1;
+}).reduce(function(p, c)
+{
+    p.push(c + ':visited:not(:hover):not(:active)');
+    return p;
+}, []).join(',');
 
 document.head.appendChild(document.createElement('style')).innerHTML = `
 html
 {
     background-color: #000;
+    color: #CCC;
 }
 body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-config
 {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAgMAAAANjH3HAAAACVBMVEUaGhohISElJSUh9lebAAAB20lEQVRIx4XWuZXDMAwE0C0SAQtggIIYoAAEU+aKOHhYojTrYP2+QfOW/5QIJOih/q8HwF/pb3EX+UPIveYcQGgEHiu9hI+ihEc5Jz5KBIlRRRaJ1JtoSAl5Hw96hLB1/up1tnIXOck5jZQy+3iU2hAOKSH1JvwxHsp+5TLF5MOl1/MQXsVs1miXc+KDbYydyMeUgpPQreZ7fWidbNhkXNJSeAhc6qHmHD8AYovunYyEACWEbyIhNeB9fRrH3hFi0bGPLuEW7xCNaohw1vAlS805nfsrTspclB/hVdoqusg53eH7FWot+wjYpOViX8KbFFKTwlnzvj65P9H/vD0/hibYBGhPwlPO8TmxRsaxsNnrUmUXpNhirlJMPr6Hqq9k5Xn/8iYQHYIuQsWFC6Z87IOxLxHphSY4SpuiU87xJnJr5axfeRd+lnMExXpEWPpuZ1v7qZdNBOjiHzDREHX5fs5Zz9p6X0vVKbKKchlSl5rv+3p//FJ/PYvoKryI8vs+2G9lzRmnEKkh+BU8yDk515jDj/HAswu7CCz6U/Mxb/PnC9N41ndpU4hUU7JGk/C9PmP/M2xZYdvBW2PObyf1IUiIzoHmHW9yTncliYs9A9tVNppdShfgQaTLMf+j3X723tLeHgAAAABJRU5ErkJggg==) !important;
+}
+.so-header
+{
+    background: #000 !important;
+}
+.so-header .navigation .-item._current .-link:not(:hover)
+{
+    color: #CCC !important;
 }
 .cv-list, .cv-list hr
 {
@@ -446,6 +467,14 @@ span.diff-add
 {
     border: solid 1px rgba(255, 255, 255, 0.15) !important;
 }
+.deleted-answer .comments .comment:hover
+{
+    background: none !important;
+}
+.comments .comment[style]
+{
+    background-color: transparent !important;
+}
 div.clc-jobs-multi.orange
 {
     background: rgba(283, 96, 20, .125) !important;
@@ -470,7 +499,7 @@ div.clc-jobs-multi>.middle>ul>li::before, div.clc-jobs-multi>.bottom::before
     background: rgba(255, 255, 255, 0.2) !important;
     margin-bottom: 10px !important;
 }
-.module.community-bulletin, .module.newuser, .realtime-post-deleted-notification p
+.module.community-bulletin, .module.newuser, .realtime-post-deleted-notification p, .deleted-answer
 {
     background: rgba(255, 0, 0, .075) !important;
 }
@@ -604,7 +633,7 @@ pre
 {
     background: #2F2F2F !important;
 }
-code .pln, code .pun
+code .pln, code .pun, code .ident
 {
     color: #CCC !important;
 }
@@ -759,8 +788,12 @@ blockquote
 {
     0% { background: rgba(0, 255, 0, .1); }
     100% { background: rgba(0, 255, 0, 0); }
-}*/
+}
 .answer-hyperlink:visited, .question-hyperlink:visited, #sidebar .community-bulletin .bulletin-item-content a.question-hyperlink:visited, #hot-network-questions ul a:visited, .post-text a:not(.post-tag):visited, .wmd-preview a:not(.post-tag):visited, .section-content a:not(.post-tag):visited, article.post.full-post .entry a:not(.post-tag):visited
+{
+    color: #777 !important;
+}*/
+` + visited + `
 {
     color: #777 !important;
 }
@@ -895,6 +928,47 @@ article.post.full-post .entry .metadata
 #custom-header > .nav-global
 {
     box-shadow: none !important;
+}
+`+links+`
+{
+    color: #dd4814 !important;
+}
+`+hover+`
+{
+    color: #ff6d3a !important;
+    text-decoration: none !important;
+}
+`+visited+`
+{
+    color: #962d0c !important;
+}
+`,
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
+'^(.*\\.)?reverseengineering\\.stackexchange\\.com$': `
+#header
+{
+    -webkit-filter: invert(100%) hue-rotate(180deg) brightness(1.5) !important;
+    filter: invert(100%) hue-rotate(180deg) brightness(1.5) !important;
+}
+.container
+{
+    box-shadow: rgba(235,242,245,.1) 0 120px 0 inset !important;
+}
+`,
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
+'^(.*\\.)?codereview\\.stackexchange\\.com$': `
+#mainbar, #mainbar-full, .mainbar-full, #logout-page, #sidebar .module:not(.community-bulletin)
+{
+    background: none !important;
+}
+`,
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
+'api\\.stackexchange\\.com$': `
+code
+{
+    color: #FFF !important;
+    padding: 1px 5px !important;
+    font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif !important;
 }
 `,
 // -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
