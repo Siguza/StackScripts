@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.6.1
+// @version      1.6.2
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -120,7 +120,7 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     background: #000 !important;
 }
-.so-header .navigation .-item._current .-link:not(:hover)
+.so-header .navigation .-item._current .-link:not(:hover), .top-bar .navigation .-item._current .-link:not(:hover)
 {
     color: #CCC !important;
 }
