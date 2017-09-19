@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.5.0
+// @version      1.6.1
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -116,7 +116,7 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAgMAAAANjH3HAAAACVBMVEUaGhohISElJSUh9lebAAAB20lEQVRIx4XWuZXDMAwE0C0SAQtggIIYoAAEU+aKOHhYojTrYP2+QfOW/5QIJOih/q8HwF/pb3EX+UPIveYcQGgEHiu9hI+ihEc5Jz5KBIlRRRaJ1JtoSAl5Hw96hLB1/up1tnIXOck5jZQy+3iU2hAOKSH1JvwxHsp+5TLF5MOl1/MQXsVs1miXc+KDbYydyMeUgpPQreZ7fWidbNhkXNJSeAhc6qHmHD8AYovunYyEACWEbyIhNeB9fRrH3hFi0bGPLuEW7xCNaohw1vAlS805nfsrTspclB/hVdoqusg53eH7FWot+wjYpOViX8KbFFKTwlnzvj65P9H/vD0/hibYBGhPwlPO8TmxRsaxsNnrUmUXpNhirlJMPr6Hqq9k5Xn/8iYQHYIuQsWFC6Z87IOxLxHphSY4SpuiU87xJnJr5axfeRd+lnMExXpEWPpuZ1v7qZdNBOjiHzDREHX5fs5Zz9p6X0vVKbKKchlSl5rv+3p//FJ/PYvoKryI8vs+2G9lzRmnEKkh+BU8yDk515jDj/HAswu7CCz6U/Mxb/PnC9N41ndpU4hUU7JGk/C9PmP/M2xZYdvBW2PObyf1IUiIzoHmHW9yTncliYs9A9tVNppdShfgQaTLMf+j3X723tLeHgAAAABJRU5ErkJggg==) !important;
 }
-.so-header
+.so-header, .top-bar
 {
     background: #000 !important;
 }
@@ -146,7 +146,7 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     color: #CCC !important;
 }
-.container, #content, .tag-container, table.doctag-cards .doctag-card.proposal-card .card-bottom .progress-bar .bar
+.container, #content, .tag-container, table.doctag-cards .doctag-card.proposal-card .card-bottom .progress-bar .bar, .expanded:hover
 {
     background: none !important;
 }
@@ -163,7 +163,7 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     background: #333 !important;
 }
-#chat-body #sound, #chat-body .button, #chat-body .stars:not(.user-star) .img.vote, .bounty-link, .module.community-bulletin .bulletin-title, .module.question-stats, .votes-cast-stats, .user-stats, .comment-up-on, .comment-up-off, .comment-flag, .openid-icon
+#chat-body #sound, #chat-body .button, #chat-body .stars:not(.user-star) .img.vote, .bounty-link, .module.community-bulletin .bulletin-title, .module.question-stats, .votes-cast-stats, .user-stats, .comment-up-on, .comment-up-off, .comment-flag, .openid-icon, .p-highlights .-graph
 {
     -webkit-filter: invert(100%) hue-rotate(180deg) !important;
     filter: invert(100%) hue-rotate(180deg) !important;
@@ -533,6 +533,25 @@ div.clc-jobs-multi>.middle, div.clc-jobs-multi>.bottom
     -o-transition: color 0.15s ease, background 0.15s ease, border 0.15s ease;
     transition: color 0.15s ease, background 0.15s ease, border 0.15s ease;
 }
+.p-top-tags .-tag-group
+{
+    background: none !important;
+    border: solid 1px rgba(255, 255, 255, 0.2) !important;
+    padding: 7px !important;
+}
+.p-highlights .-card
+{
+    background: none !important;
+    border: solid 1px rgba(255, 255, 255, 0.2) !important;
+}
+.p-highlights .-graph
+{
+    background-color: #CCC !important;
+}
+.p-highlights .-reputation .-rep
+{
+    color: #CCC !important;
+}
 .add-tab
 {
     color: #888 !important;
@@ -629,9 +648,17 @@ pre > code
 {
     background: none !important;
 }
-pre
+#content pre
 {
     background: #2F2F2F !important;
+}
+#query-options label
+{
+    color: #FFF !important;
+}
+.slick-row
+{
+    background: #fdfdfd !important;
 }
 code .pln, code .pun, code .ident
 {
@@ -656,6 +683,11 @@ code .typ, code .atn
 code .com
 {
     color: #080 !important;
+}
+.has-changed, .rollback, .version-line
+{
+    background: rgba(255, 255, 255, .05) !important;
+    border: solid 1px rgba(255, 255, 255, .2) !important;
 }
 .user-page .card.impact-card .number a, .user-show-new .card.impact-card .number a
 {
@@ -799,7 +831,7 @@ blockquote
 }
 ` + f({
 // -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
-'^(.*\\.)?((stackoverflow|superuser|(apple|docs-beta)\\.stackexchange)\\.com|mathoverflow\\.net)$': `
+'^(.*\\.)?((stackoverflow|superuser|(apple|docs-beta|skeptics)\\.stackexchange)\\.com|mathoverflow\\.net)$': `
 #hlogo, #footer-logo, .header-logo
 {
     -webkit-filter: invert(100%) hue-rotate(180deg) !important;
@@ -960,6 +992,26 @@ article.post.full-post .entry .metadata
 #mainbar, #mainbar-full, .mainbar-full, #logout-page, #sidebar .module:not(.community-bulletin)
 {
     background: none !important;
+}
+`,
+// -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
+'^(.*\\.)?skeptics\\.stackexchange\\.com$': `
+`+links+`
+{
+    color: #157fad !important;
+}
+`+hover+`
+{
+    color: #1aa1db !important;
+    text-decoration: none !important;
+}
+#hmenus .nav ul li:before
+{
+    mix-blend-mode: normal !important;
+}
+#hmenus .nav ul li a
+{
+    color: #DDD !important;
 }
 `,
 // -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
