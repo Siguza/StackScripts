@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.6.2
+// @version      1.6.4
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -78,6 +78,9 @@ var l =
     '.cv-list a',
     '.post-timeline a',
     '.doctag-card .card-top a:first-child',
+    '.popup-breadcrumbs a',
+    '.action-list a',
+    '.popup .post-link a',
     'h3.title-section a',
     'article.post.full-post .entry a',
     'div.clc-jobs-multi>.middle>ul>li .title',
@@ -120,7 +123,13 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     background: #000 !important;
 }
-.so-header .navigation .-item._current .-link:not(:hover), .top-bar .navigation .-item._current .-link:not(:hover)
+.top-bar .-logo
+{
+    -webkit-filter: invert(100%) hue-rotate(180deg) brightness(1.5) !important;
+    filter: invert(100%) hue-rotate(180deg) brightness(1.5) !important;
+}
+.so-header .navigation .-item._current .-link:not(:hover), .top-bar .navigation .-item._current .-link:not(:hover), .close-as-duplicate-pane .original-display .navi-container, .close-as-duplicate-pane .original-display .list-originals .list .item .body-summary,
+.s-btn__muted.s-btn__outlined, .s-btn__muted.s-btn__outlined:focus
 {
     color: #CCC !important;
 }
@@ -146,11 +155,11 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     color: #CCC !important;
 }
-.container, #content, .tag-container, table.doctag-cards .doctag-card.proposal-card .card-bottom .progress-bar .bar, .expanded:hover
+.container, #content, .tag-container, table.doctag-cards .doctag-card.proposal-card .card-bottom .progress-bar .bar, .expanded:hover, .s-sidebarwidget--header
 {
     background: none !important;
 }
-._background-light, .privileges-page .privilege-table-row:hover
+._background-light, .privileges-page .privilege-table-row:hover, .close-as-duplicate-pane .original-display .list-originals .list .item.hover
 {
     background: rgba(255, 255, 255, .05) !important;
 }
@@ -158,6 +167,11 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     border: solid 1px rgba(255, 255, 255, 0.2) !important;
     border-bottom: none !important;
+    padding: 15px !important;
+}
+.flush-left
+{
+    margin-left: -15px !important;
 }
 #footer, #chat-body #input-area
 {
@@ -360,6 +374,10 @@ span.diff-add
 {
     border-top: solid 1px rgba(255, 255, 255, 0.2) !important;
 }
+ul.comments-list .comment>*
+{
+    border-bottom: solid 1px rgba(255, 255, 255, 0.2) !important;
+}
 .history-table .comments
 {
     border-top: none !important;
@@ -514,6 +532,18 @@ div.clc-jobs-multi>.middle, div.clc-jobs-multi>.bottom
 .question-status
 {
     background: rgba(0, 100, 255, 0.2) !important;
+}
+.s-sidebarwidget, .s-sidebarwidget--header, .s-sidebarwidget--content
+{
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+.s-sidebarwidget--header
+{
+    border-top: 0 !important;
+}
+.s-sidebarwidget::before, .s-sidebarwidget::after
+{
+    display: none !important;
 }
 .post-tag, .ob-post-tag, #room-tags .tag, .postTag, ._tag
 {
@@ -870,6 +900,10 @@ blockquote
 #footer .footerwrap #copyright a, #footer .footerwrap #additional-notices a, #footer .footerwrap #svnrev a
 {
     color: #aaa !important;
+}
+.container._full #content
+{
+    width: 1088px !important;
 }
 `,
 // -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- --------------------
