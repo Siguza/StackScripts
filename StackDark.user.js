@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.6.4
+// @version      1.6.5
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -517,7 +517,7 @@ div.clc-jobs-multi>.middle>ul>li::before, div.clc-jobs-multi>.bottom::before
     background: rgba(255, 255, 255, 0.2) !important;
     margin-bottom: 10px !important;
 }
-.module.community-bulletin, .module.newuser, .realtime-post-deleted-notification p, .deleted-answer
+.module.community-bulletin, .module.newuser, .realtime-post-deleted-notification p, .deleted-answer, .s-sidebarwidget__yellow
 {
     background: rgba(255, 0, 0, .075) !important;
 }
@@ -544,6 +544,10 @@ div.clc-jobs-multi>.middle, div.clc-jobs-multi>.bottom
 .s-sidebarwidget::before, .s-sidebarwidget::after
 {
     display: none !important;
+}
+.post-tag, .moderator-tag, .required-tag, .disliked-tag, .favorite-tag, .company-tag, .geo-tag, .geo-tag, .container .chosen-choices .search-choice, .container .chosen-container-multi .chosen-choices li.search-choice
+{
+    border-radius: 0 !important;
 }
 .post-tag, .ob-post-tag, #room-tags .tag, .postTag, ._tag
 {
