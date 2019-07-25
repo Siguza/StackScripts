@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RoombaForecast
 // @author       Siguza
-// @version      1.0.0
+// @version      1.1.1
 // @description  Is the roomba gonna pick up a question or not?
 // @namespace    siguza.roombaforecast
 // @homepage     https://github.com/Siguza/StackScripts
@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', function()
 
     function XHR(type, url, data, cb)
     {
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.open(type, url);
         xhr.addEventListener('load', function(ev)
         {
@@ -41,25 +41,39 @@ window.addEventListener('DOMContentLoaded', function()
     }
     function addRoombaField()
     {
-        var row = document.getElementById('qinfo').insertRow(),
+        /*let row = document.getElementById('qinfo').insertRow(),
             labelCell = row.insertCell(),
             label = labelCell.appendChild(document.createElement('p')),
             valueCell = row.insertCell(),
             value = valueCell.appendChild(document.createElement('p')),
             ret = value.appendChild(document.createElement('b'));
         label.className = value.className = 'label-key';
-        label.textContent = 'roomba';
         labelCell.style.verticalAlign = 'top';
-        valueCell.style.paddingLeft = '10px';
+        valueCell.style.paddingLeft = '10px';*/
+
+        let container = document.getElementById('question-header').nextElementSibling;
+        if(container.id != '')
+        {
+            throw "Can't find right container element";
+        }
+        let parent = container.appendChild(document.createElement('div')),
+            label  = parent.appendChild(document.createElement('span')),
+            _      = parent.appendChild(document.createTextNode(' '));
+            ret    = parent.appendChild(document.createTextNode(''));
+        parent.className = parent.previousElementSibling.className;
+        label.className = parent.previousElementSibling.firstElementChild.className;
+        parent.style.marginLeft = '20px';
+        
+        label.textContent = 'roomba';
         ret.textContent = '...';
         return ret;
     }
 
-    var roombaField = addRoombaField();
+    let roombaField = addRoombaField();
 
     XHR('GET', 'https://api.stackexchange.com/2.2/questions/' + getQuestionId() + '?site=' + location.hostname + '&filter=' + FILTER_ID, null, function(res)
     {
-        var data = JSON.parse(res),
+        let data = JSON.parse(res),
             q = data.items[0],
             a = 0,
             reasons = [];
@@ -97,12 +111,13 @@ window.addEventListener('DOMContentLoaded', function()
 
         if(reasons.length > 0)
         {
-            roombaField.innerHTML = reasons.join('<br>');
+            //roombaField.innerHTML = reasons.join('<br>');
+            roombaField.textContent = reasons.join(', ');
         }
         else
         {
-            var days = Math.max(Math.floor(Math.max(q.closed_date || 0, q.last_edit_date || 0) / 86400) - Math.floor(Date.now() / 1000 / 86400) + 10, 0);
-            roombaField.textContent = days + ' day' + (days == 1 ? '' : 's');
+            let days = Math.max(Math.floor(Math.max(q.closed_date || 0, q.last_edit_date || 0) / 86400) - Math.floor(Date.now() / 1000 / 86400) + 10, 0);
+            roombaField.textContent = days === 0 ? '< 24h' : (days + ' day' + (days === 1 ? '' : 's'));
         }
     });
 });
