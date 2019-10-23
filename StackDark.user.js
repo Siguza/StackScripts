@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.6.5
+// @version      1.6.6
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -155,7 +155,7 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     color: #CCC !important;
 }
-.container, #content, .tag-container, table.doctag-cards .doctag-card.proposal-card .card-bottom .progress-bar .bar, .expanded:hover, .s-sidebarwidget--header
+.container, #content, .tag-container, table.doctag-cards .doctag-card.proposal-card .card-bottom .progress-bar .bar, .expanded:hover, .s-sidebarwidget--header, .s-sidebarwidget
 {
     background: none !important;
 }
