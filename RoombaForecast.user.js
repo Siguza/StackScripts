@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RoombaForecast
 // @author       Siguza
-// @version      1.1.1
+// @version      1.1.2
 // @description  Is the roomba gonna pick up a question or not?
 // @namespace    siguza.roombaforecast
 // @homepage     https://github.com/Siguza/StackScripts
@@ -58,12 +58,12 @@ window.addEventListener('DOMContentLoaded', function()
         }
         let parent = container.appendChild(document.createElement('div')),
             label  = parent.appendChild(document.createElement('span')),
-            _      = parent.appendChild(document.createTextNode(' '));
+            _      = parent.appendChild(document.createTextNode(' ')),
             ret    = parent.appendChild(document.createTextNode(''));
         parent.className = parent.previousElementSibling.className;
         label.className = parent.previousElementSibling.firstElementChild.className;
         parent.style.marginLeft = '20px';
-        
+
         label.textContent = 'roomba';
         ret.textContent = '...';
         return ret;
@@ -78,7 +78,7 @@ window.addEventListener('DOMContentLoaded', function()
             a = 0,
             reasons = [];
 
-        console.log(data.quota_remaining);
+        //console.log(data.quota_remaining);
 
         if(q === undefined)
         {
@@ -96,7 +96,7 @@ window.addEventListener('DOMContentLoaded', function()
 
         if('locked_date' in q)
             reasons.push('locked');
-        if(q.closed_reason == 'duplicate')
+        if(q.closed_reason.startsWith('Duplicate of')) //if(q.closed_reason == 'duplicate')
             reasons.push('duplicate');
         if(!('closed_date' in q))
             reasons.push('not closed');
