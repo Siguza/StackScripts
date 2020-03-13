@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RoombaForecast
 // @author       Siguza
-// @version      1.1.2
+// @version      1.1.3
 // @description  Is the roomba gonna pick up a question or not?
 // @namespace    siguza.roombaforecast
 // @homepage     https://github.com/Siguza/StackScripts
@@ -96,7 +96,7 @@ window.addEventListener('DOMContentLoaded', function()
 
         if('locked_date' in q)
             reasons.push('locked');
-        if(q.closed_reason.startsWith('Duplicate of')) //if(q.closed_reason == 'duplicate')
+        if(q.closed_reason && q.closed_reason.startsWith('Duplicate of')) //if(q.closed_reason == 'duplicate')
             reasons.push('duplicate');
         if(!('closed_date' in q))
             reasons.push('not closed');
