@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RoombaForecast
 // @author       Siguza
-// @version      1.1.3
+// @version      1.1.4
 // @description  Is the roomba gonna pick up a question or not?
 // @namespace    siguza.roombaforecast
 // @homepage     https://github.com/Siguza/StackScripts
@@ -19,6 +19,9 @@
 
 window.addEventListener('DOMContentLoaded', function()
 {
+    if(!document.getElementById('question'))
+        return;
+
     const FILTER_ID = '!)IMJFnSTdupIEnngEcvB24U1Dk97gjd1_UVZ';
 
     function XHR(type, url, data, cb)
