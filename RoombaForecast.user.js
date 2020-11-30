@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RoombaForecast
 // @author       Siguza
-// @version      1.1.4
+// @version      1.1.5
 // @description  Is the roomba gonna pick up a question or not?
 // @namespace    siguza.roombaforecast
 // @homepage     https://github.com/Siguza/StackScripts
@@ -17,43 +17,24 @@
 // @include      /^https?:\/\/stackapps\.com/questions/.*$/
 // ==/UserScript==
 
-window.addEventListener('DOMContentLoaded', function()
+const f = () =>
 {
     if(!document.getElementById('question'))
         return;
 
     const FILTER_ID = '!)IMJFnSTdupIEnngEcvB24U1Dk97gjd1_UVZ';
 
-    function XHR(type, url, data, cb)
+    const XHR = (type, url, data, cb) =>
     {
         let xhr = new XMLHttpRequest();
         xhr.open(type, url);
-        xhr.addEventListener('load', function(ev)
-        {
-            cb(ev.target.response);
-        });
-        xhr.addEventListener('error', function(ev)
-        {
-            console.error(ev);
-        });
+        xhr.addEventListener('load', ev => cb(ev.target.response));
+        xhr.addEventListener('error', ev => console.error(ev));
         xhr.send(data);
     }
-    function getQuestionId()
+    const getQuestionId = () => document.getElementById('question').dataset.questionid;
+    const addRoombaField = () =>
     {
-        return document.getElementById('question').dataset.questionid;
-    }
-    function addRoombaField()
-    {
-        /*let row = document.getElementById('qinfo').insertRow(),
-            labelCell = row.insertCell(),
-            label = labelCell.appendChild(document.createElement('p')),
-            valueCell = row.insertCell(),
-            value = valueCell.appendChild(document.createElement('p')),
-            ret = value.appendChild(document.createElement('b'));
-        label.className = value.className = 'label-key';
-        labelCell.style.verticalAlign = 'top';
-        valueCell.style.paddingLeft = '10px';*/
-
         let container = document.getElementById('question-header').nextElementSibling;
         if(container.id != '')
         {
@@ -74,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function()
 
     let roombaField = addRoombaField();
 
-    XHR('GET', 'https://api.stackexchange.com/2.2/questions/' + getQuestionId() + '?site=' + location.hostname + '&filter=' + FILTER_ID, null, function(res)
+    XHR('GET', 'https://api.stackexchange.com/2.2/questions/' + getQuestionId() + '?site=' + location.hostname + '&filter=' + FILTER_ID, null, res =>
     {
         let data = JSON.parse(res),
             q = data.items[0],
@@ -91,10 +72,7 @@ window.addEventListener('DOMContentLoaded', function()
 
         if('answers' in q)
         {
-            a = q.answers.filter(function(e)
-            {
-                return e.score > 0;
-            }).length;
+            a = q.answers.filter(e => e.score > 0).length;
         }
 
         if('locked_date' in q)
@@ -114,7 +92,6 @@ window.addEventListener('DOMContentLoaded', function()
 
         if(reasons.length > 0)
         {
-            //roombaField.innerHTML = reasons.join('<br>');
             roombaField.textContent = reasons.join(', ');
         }
         else
@@ -123,4 +100,13 @@ window.addEventListener('DOMContentLoaded', function()
             roombaField.textContent = days === 0 ? '< 24h' : (days + ' day' + (days === 1 ? '' : 's'));
         }
     });
-});
+};
+
+if(document.readyState == 'loading')
+{
+    window.addEventListener('DOMContentLoaded', f);
+}
+else
+{
+    f();
+}
