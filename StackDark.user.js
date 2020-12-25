@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.6.6
+// @version      1.6.7
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
 // @run-at       document-start
 // @grant        none
-// @include      /^https?:\/\/(.*\.)?stackoverflow\.com/.*$/
+// @include      /^https?:\/\/(.*\.)stackoverflow\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?serverfault\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?superuser\.com/.*$/
 // @include      /^https?:\/\/(.*\.)?stackexchange\.com/.*$/
@@ -340,7 +340,7 @@ body, .popup, .review-bar-container .review-bar, .cv-list, .message.message-conf
 {
     color: #666 !important;
 }
-.full-diff td.content.deleted, .full-diff td.content.inserted
+.full-diff td.content.deleted, .full-diff td.content.inserted, .s-prose blockquote, .s-prose :not(.s-code-block) > code
 {
     color: inherit !important;
 }
