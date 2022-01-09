@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         StackDark
 // @author       Siguza
-// @version      1.6.8
+// @version      1.6.9
 // @description  Dark style for StackExchange
 // @namespace    siguza.stackdark
 // @homepage     https://github.com/Siguza/StackScripts
@@ -109,7 +109,7 @@ var visited = l.filter(function(e)
     return p;
 }, []).join(',');
 
-document.head.appendChild(document.createElement('style')).innerHTML = `
+(document.head || document.documentElement).appendChild(document.createElement('style')).innerHTML = `
 html
 {
     background-color: #000;
