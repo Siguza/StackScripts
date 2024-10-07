@@ -2,7 +2,7 @@
 @name         StackDark
 @author       Siguza
 @namespace    siguza.stackdark
-@version      2.0
+@version      2.0.1
 @description  Dark style for StackExchange
 @homepageURL  https://github.com/Siguza/StackScripts
 ==/UserStyle== */
@@ -171,7 +171,7 @@ body
 }
 }
 
-@-moz-document regexp("https?://(([0-9a-z\\-]+\\.)*(superuser\\.com)|(apple|softwareengineering)(\\.meta)?\\.stackexchange\\.com)/.*") {
+@-moz-document regexp("https?://(([0-9a-z\\-]+\\.)*(superuser\\.com|serverfault\\.com)|(apple|softwareengineering)(\\.meta)?\\.stackexchange\\.com)/.*") {
 .site-header a.site-header--link
 {
     filter: invert(1) hue-rotate(180deg);
